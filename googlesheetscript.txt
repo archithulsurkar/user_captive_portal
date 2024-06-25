@@ -1,0 +1,20 @@
+function doGet(e) {
+  return handleResponse(e);
+}
+
+function doPost(e) {
+  return handleResponse(e);
+}
+
+function handleResponse(e) {
+  var sheet = SpreadsheetApp.openById('1JekklLw0oxsZ5Y5rD5qG1LNKjGWNu4rio0O08mePR_0').getActiveSheet();
+  
+  var data = JSON.parse(e.postData.contents);
+  var date = new Date();
+  var formattedDate = Utilities.formatDate(date, Session.getScriptTimeZone(), "yyyy-MM-dd");
+  var formattedTime = Utilities.formatDate(date, Session.getScriptTimeZone(), "HH:mm:ss");
+
+  sheet.appendRow([formattedDate, formattedTime, data.name, data.address, data.contact]);
+
+  return ContentService.createTextOutput("Success");
+}
